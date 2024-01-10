@@ -1,0 +1,67 @@
+---
+name: Release and Deploy collection
+on:
+  release:
+    types:
+      - published
+jobs:
+  Release-And-Deploy:
+    runs-on: Ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+
+      - name: Setup Python
+        uses: actions/setup-python@v5.0.0
+        with:
+          python-version: 3.11.0
+
+      - name: Setup virtual environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --user virtualenv
+          python -m virtualenv venv
+
+      - name: Install Python dependencies
+        run: |
+          ./venv/bin/python -m pip install ansible shyaml
+
+      - name: Collect version number from release object
+        id: github_version
+        run: |
+          version=${{ github.event.release.tag_name }}
+          echo "github_version=${version#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Collect version number from galaxy.yml
+        id: galaxy_version
+        run: |
+          version=$(cat galaxy.yml | ./venv/bin/shyaml get-value version)
+          echo "galaxy_version=${version#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Ensure version number is equal to version number in galaxy.yml file
+        run: |
+          if [ "${{ steps.github_version.outputs.github_version }}" != "${{ steps.galaxy_version.outputs.galaxy_version }}" ]; then
+            echo "Version number in galaxy.yml file does not match version number in release object"
+            exit 1
+          fi
+
+      - name: Get collection name from galaxy.yml
+        id: collection_name
+        run: |
+          name=$(cat galaxy.yml | ./venv/bin/shyaml get-value name)
+          echo "collection_name=${name}" >> "$GITHUB_OUTPUT"
+
+      - name: Get namespace from galaxy.yml
+        id: namespace
+        run: |
+          namespace=$(cat galaxy.yml | ./venv/bin/shyaml get-value namespace)
+          echo "namespace=${namespace}" >> "$GITHUB_OUTPUT"
+
+      - name: Build collection
+        run: |
+          ./venv/bin/ansible-galaxy collection build
+
+      - name: Publish collection to ansible-galaxy
+        env:
+          ANSIBLE_GALAXY_TOKEN: ${{ secrets.ANSIBLE_GALAXY_API_TOKEN}}
+        run: ./venv/bin/ansible-galaxy collection publish ./${{ steps.collection_name.outputs.namespace }}-${{ steps.collection_name.outputs.collection_name }}-${{ steps.github_version.outputs.github_version }}.tar.gz --api-key ${{ secrets.ANSIBLE_GALAXY_API_TOKEN }}
