@@ -14,5 +14,11 @@ tags:
   - "venv"
   - "virtualenv"
   - "docker"
-  - "docker-compose"
+  - "docker_compose"
 repository: "https://github.com/hoodnoah/homelab_provisioning"
+build_ignore:
+  - "venv"
+  - ".gitignore"
+  - ".github"
+  - "*.tar.gz"
+  - "*.json"
