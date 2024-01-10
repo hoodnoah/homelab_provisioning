@@ -1,6 +1,7 @@
 ---
 namespace: "hoodnoah"
-name: "python_venv"
+name: "homelab_provisioning"
+description: "Ansible roles for tasks common across hosts for provisioning my homelab"
 version: "1.0.0"
 readme: "README.md"
 authors:
