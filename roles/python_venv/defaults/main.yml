@@ -1,0 +1,3 @@
+---
+# defaults file for roles/python_venv
+venv_dir: /opt/ansible_venv

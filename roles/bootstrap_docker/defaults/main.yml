@@ -1,0 +1,5 @@
+---
+# defaults file for docker
+default_uname: hoodn
+upgrade_if_installed: false
+venv_dir: /opt/docker-compose-venv

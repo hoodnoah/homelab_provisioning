@@ -1,0 +1,18 @@
+---
+namespace: "hoodnoah"
+name: "python_venv"
+version: "1.0.0"
+readme: "README.md"
+authors:
+  - "Noah Hood <hood.noah@icloud.com>"
+license:
+  - "MIT"
+tags:
+  - "hoodnoah"
+  - "python"
+  - "venv"
+  - "virtualenv"
+  - "virtual environment"
+  - "docker"
+  - "docker-compose"
+repository: "https://github.com/hoodnoah/homelab_provisioning"

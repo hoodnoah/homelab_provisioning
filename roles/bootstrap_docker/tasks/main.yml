@@ -1,0 +1,84 @@
+---
+# tasks file for docker
+- name: Setup Docker
+  block:
+    - name: Install Docker dependencies
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      loop:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg-agent
+        - software-properties-common
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repo to apt
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu jammy stable
+        state: present
+
+    - name: Install Docker
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      loop:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+
+    - name: Check Docker active
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+- name: Setup users, groups
+  block:
+    - name: Ensure group 'docker' exists
+      ansible.builtin.group:
+        name: docker
+        state: present
+
+    - name: Add base user to group
+      user:
+        name: "{{ default_uname }}"
+        groups: docker
+        append: yes
+
+- name: Run hello-world test
+  community.docker.docker_compose:
+    project_name: hello-world
+    definition:
+      version: '2'
+      services:
+        hello-world:
+          image: hello-world
+          restart: never
+
+
+# - name: Setup Docker Compose prerequesites
+#   block:
+#     - name: Ensure python, pip installed
+#       become: true
+#       ansible.builtin.apt:
+#         name: "{{ item }}"
+#         state: present
+#         update_cache: yes
+#       loop:
+#         - python3
+#         - python3-pip
+#         - python3-venv
+
+#     - name: Install docker-compose Python library
+#       ansible.builtin.pip:
+#         name: docker-compose
+#         state: present
+#         virtualenv: "{{ venv_dir }}"
