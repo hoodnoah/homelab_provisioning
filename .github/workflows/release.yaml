@@ -64,4 +64,4 @@ jobs:
       - name: Publish collection to ansible-galaxy
         env:
           ANSIBLE_GALAXY_TOKEN: ${{ secrets.ANSIBLE_GALAXY_API_TOKEN}}
-        run: ./venv/bin/ansible-galaxy collection publish ./${{ steps.collection_name.outputs.namespace }}-${{ steps.collection_name.outputs.collection_name }}-${{ steps.github_version.outputs.github_version }}.tar.gz --api-key ${{ secrets.ANSIBLE_GALAXY_API_TOKEN }}
+        run: ./venv/bin/ansible-galaxy collection publish ./${{ steps.namespace.outputs.namespace }}-${{ steps.collection_name.outputs.collection_name }}-${{ steps.github_version.outputs.github_version }}.tar.gz --api-key ${{ secrets.ANSIBLE_GALAXY_API_TOKEN }}
