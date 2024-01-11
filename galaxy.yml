@@ -22,5 +22,7 @@ build_ignore:
   - ".github"
   - "*.tar.gz"
   - "*.json"
+  - test_inventory
+  - test_playbook.yaml
 dependencies:
   "community.docker": "3.6.0-b1"
