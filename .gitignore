@@ -1,3 +1,6 @@
 venv
 release_event.json
 *.tar.gz
+test_playbook.yaml
+test_inventory
+.DS_Store

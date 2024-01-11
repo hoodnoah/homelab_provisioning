@@ -54,31 +54,30 @@
         append: yes
 
 - name: Run hello-world test
-  community.docker.docker_compose:
-    project_name: hello-world
-    definition:
-      version: '2'
-      services:
-        hello-world:
-          image: hello-world
-          restart: never
-
-
-# - name: Setup Docker Compose prerequesites
-#   block:
-#     - name: Ensure python, pip installed
-#       become: true
-#       ansible.builtin.apt:
-#         name: "{{ item }}"
-#         state: present
-#         update_cache: yes
-#       loop:
-#         - python3
-#         - python3-pip
-#         - python3-venv
-
-#     - name: Install docker-compose Python library
-#       ansible.builtin.pip:
-#         name: docker-compose
-#         state: present
-#         virtualenv: "{{ venv_dir }}"
+  block:
+  - name: Copy over the test docker-compose stack
+    block:
+    - name: Create directory
+      ansible.builtin.file:
+        path: /tmp/hello-world
+        state: directory
+    - name: Copy file
+      ansible.builtin.copy:
+        src: ../files/docker-compose.yaml
+        dest: /tmp/hello-world/docker-compose.yaml
+  - name: Tear down existing stack
+    community.docker.docker_compose_v2:
+      project_src: /tmp/hello-world
+      state: absent
+  - name: Fire up stack 
+    community.docker.docker_compose_v2:
+      project_src: /tmp/hello-world
+      state: present
+  - name: Tear stack back down
+    community.docker.docker_compose_v2:
+      project_src: /tmp/hello-world
+      state: absent
+  - name: Remove test stack
+    ansible.builtin.file:
+      path: /tmp/hello-world
+      state: absent
