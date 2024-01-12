@@ -2,10 +2,6 @@
 # tasks file for docker
 - name: Setup Docker
   block:
-    - name: Exit early if docker is already installed
-      meta: end_host
-      when: DOCKER_CONFIGURED is defined and DOCKER_CONFIGURED
-
     - name: Install Docker dependencies
       apt:
         name: "{{ item }}"
@@ -43,6 +39,7 @@
         name: docker
         state: started
         enabled: yes
+  when: DOCKER_CONFIGURED is not defined or not DOCKER_CONFIGURED
 
 - name: Setup users, groups
   block:
@@ -56,6 +53,7 @@
         name: "{{ default_uname }}"
         groups: docker
         append: yes
+  when: DOCKER_CONFIGURED is not defined or not DOCKER_CONFIGURED
 
 - name: Run hello-world test
   block:
@@ -86,7 +84,9 @@
     ansible.builtin.file:
       path: /tmp/hello-world
       state: absent
+  when: DOCKER_CONFIGURED is not defined or not DOCKER_CONFIGURED
 
 - name: Set DOCKER_CONFIGURED fact
   ansible.builtin.set_fact:
     DOCKER_CONFIGURED: true
+  when: DOCKER_CONFIGURED is not defined or not DOCKER_CONFIGURED
