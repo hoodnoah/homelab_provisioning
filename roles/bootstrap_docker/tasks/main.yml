@@ -73,6 +73,7 @@
     community.docker.docker_compose_v2:
       project_src: /tmp/hello-world
       state: present
+    register: output
   - name: Tear stack back down
     community.docker.docker_compose_v2:
       project_src: /tmp/hello-world
