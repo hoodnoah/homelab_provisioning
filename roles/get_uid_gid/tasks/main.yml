@@ -13,5 +13,5 @@
 
 - name: Set uid and gid facts
   set_fact:
-    puid: "{{ USER_INFO.ansible_facts.getent_passwd[CURRENT_USER.stdout].1 }}"
-    pgid: "{{ USER_INFO.ansible_facts.getent_passwd[CURRENT_USER.stdout].2 }}"
+    PUID: "{{ USER_INFO.ansible_facts.getent_passwd[CURRENT_USER.stdout].1 }}"
+    PGID: "{{ USER_INFO.ansible_facts.getent_passwd[CURRENT_USER.stdout].2 }}"
