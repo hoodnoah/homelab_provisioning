@@ -2,6 +2,10 @@
 # tasks file for docker
 - name: Setup Docker
   block:
+    - name: Exit early if docker is already installed
+      meta: end_host
+      when: DOCKER_CONFIGURED is defined and DOCKER_CONFIGURED
+
     - name: Install Docker dependencies
       apt:
         name: "{{ item }}"
@@ -82,3 +86,7 @@
     ansible.builtin.file:
       path: /tmp/hello-world
       state: absent
+
+- name: Set DOCKER_CONFIGURED fact
+  ansible.builtin.set_fact:
+    DOCKER_CONFIGURED: true
