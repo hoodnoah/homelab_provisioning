@@ -2,7 +2,7 @@
 namespace: "hoodnoah"
 name: "homelab_provisioning"
 description: "Ansible roles for tasks common across hosts for provisioning my homelab"
-version: "2.1.3"
+version: "2.1.4"
 readme: "README.md"
 authors:
   - "Noah Hood <hood.noah@icloud.com>"
