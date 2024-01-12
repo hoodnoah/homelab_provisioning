@@ -5,6 +5,7 @@ This collection includes roles which are common tasks across many hosts on my ho
 ## Roles
 
 - [bootstrap_docker](roles/bootstrap_docker/README.md): A role for installing/ensuring Docker is installed and operational.
+- [get_uid_gid](roles/get_uid_gid/README.md): A role for collecting the current user's UID and GID, for injection into [Linuxserver's Docker-Compose images](https://docs.linuxserver.io/general/understanding-puid-and-pgid/).
 
 ## Requirements
 

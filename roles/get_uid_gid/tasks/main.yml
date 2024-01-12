@@ -1,0 +1,17 @@
+---
+# tasks file for ./roles/get_uid_gid
+- name: Get user
+  ansible.builtin.command:
+    cmd: whoami
+  register: CURRENT_USER
+
+- name: Get UID and GID
+  ansible.builtin.getent:
+    database: passwd
+    key: "{{ CURRENT_USER.stdout }}"
+  register: USER_INFO
+
+- name: Set uid and gid facts
+  set_fact:
+    puid: "{{ USER_INFO.ansible_facts.getent_passwd[CURRENT_USER.stdout].1 }}"
+    pgid: "{{ USER_INFO.ansible_facts.getent_passwd[CURRENT_USER.stdout].2 }}"
