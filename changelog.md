@@ -5,21 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.1.4] - 2023-01-13
+## [2.1.5] - 2024-03-27
+
+- Fixed incorrect year in `changelog.md`
+- Pinned new `community.docker` dependency now that `docker_compose_v2` is stable
+
+## [2.1.4] - 2024-01-13
 
 - Fixed early exit to permit processing of other tasks subsequent to the `bootstrap_docker` role
 
-## [2.1.3] - 2023-01-13
+## [2.1.3] - 2024-01-13
 
 - Added registration of docker installation to permit early-exit in the event docker has already been verified once in the playbook run
 
-## [2.1.2] - 2023-01-13
+## [2.1.2] - 2024-01-13
 
 ### Fixed
 
 - Hid Docker-Compose output to prevent `community.docker.docker_compose_v2` from polluting logs w/ warnings about output parsing
 
-## [2.1.1] - 2023-01-12
+## [2.1.1] - 2024-01-12
 
 ### Fixed
 
