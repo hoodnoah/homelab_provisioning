@@ -25,4 +25,4 @@ build_ignore:
   - test_inventory
   - test_playbook.yaml
 dependencies:
-  "community.docker": "3.6.0-b1"
+  "community.docker": "3.8.1"
