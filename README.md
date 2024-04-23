@@ -7,6 +7,7 @@ This collection includes roles which are common tasks across many hosts on my ho
 - [bootstrap_docker](roles/bootstrap_docker/README.md): A role for installing/ensuring Docker is installed and operational.
 - [get_uid_gid](roles/get_uid_gid/README.md): A role for collecting the current user's UID and GID, for injection into [Linuxserver's Docker-Compose images](https://docs.linuxserver.io/general/understanding-puid-and-pgid/).
 - [timezone](roles/timezone/README.md): A role for setting the timezone. Defaults to "America/New_York".
+- [borgbackup](roles/borgbackup/README.md): A role for installing [borgbackup](https://www.borgbackup.org).
 
 ## Requirements
 
@@ -28,6 +29,8 @@ ansible-galaxy collection install hoodnoah.homelab_provisioning
     - hoodnoah.homelab_provisioning
   roles:
     - bootstrap_docker
+    - timezone
+    - borgbackup
 ```
 
 ## License
