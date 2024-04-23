@@ -26,4 +26,4 @@ MIT
 
 ## Author Information
 
-Noah Hood | hood.noah@icloud.com
+Noah Hood [hood.noah@icloud.com](mailto:hood.noah@icloud.com)
