@@ -1,0 +1,42 @@
+---
+# tasks file for borgrepo
+- name: Quit if borgbackup is not installed
+  ansible.builtin.fail:
+    msg: "borgbackup is not installed"
+  when: borgbackup_installed is not defined or not borgbackup_installed
+
+- name: Create borg repository
+  block:
+    - name: Create borg repository directory
+      ansible.builtin.file:
+        path: "{{ borgrepo_repo_path }}"
+        state: directory
+        mode: u+rw,g+rw,o+rw
+
+    - name: Initialize borg repository
+      ansible.builtin.command:
+        cmd: "borg init --encryption=repokey-blake2 {{ borgrepo_repo_path }}"
+      environment:
+        BORG_PASSPHRASE: "{{ borgrepo_passphrase }}"
+      register: borg_init
+      changed_when: borg_init.rc == 0
+      failed_when: borg_init.rc != 0 and borg_init.rc != 2
+
+- name: Set borg password environment variable in borg config
+  ansible.builtin.copy:
+    dest: "/etc/.borgpass"
+    content: "export BORG_PASSPHRASE={{ borgrepo_passphrase }}"
+    owner: "root"
+    group: "root"
+    mode: "0600"
+  no_log: true
+
+- name: Set cron job for periodic backups to repository
+  ansible.builtin.cron:
+    name: "Borg backup to repository"
+    minute: "1"
+    hour: "0"
+    job: "borg create {{ borgrepo_repo_path }}::{{ borgrepo_app_name }}-{now:%Y-%m-%d} {{ borgrepo_backup_paths | join(' ') }}"
+    cron_file: "borgbackup-{{ borgrepo_app_name }}"
+    user: "root"
+    state: present

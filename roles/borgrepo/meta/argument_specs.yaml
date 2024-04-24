@@ -1,0 +1,26 @@
+---
+argument_specs:
+  main:
+    short_description: Main entry point for the borgrepo role
+    description:
+      - This is the main entrypoint for the borgrepo role.
+      - It creates a borg repository and sets up a cron job for periodic backups.
+    author:
+      - "Noah Hood"
+    options:
+      borgrepo_app_name:
+        type: "str"
+        required: true
+        description: the name of the application which is being backed up by borg
+      borgrepo_repo_path:
+        type: "str"
+        required: true
+        description: the path to the borg repository, e.g. /var/app-backup
+      borgrepo_passphrase:
+        type: "str"
+        required: true
+        description: the passphrase to use for encrypting the borg repository
+      borgrepo_backup_paths:
+        type: "list"
+        elements: "str"
+        required: true

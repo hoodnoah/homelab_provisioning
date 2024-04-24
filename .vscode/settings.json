@@ -1,3 +1,6 @@
 {
+  "files.associations": {
+    "**/*.yml": "ansible"
+  },
   "ansible.python.interpreterPath": "/Users/noahhood/Documents/Programming/ansible_collection/venv/bin/python"
 }
