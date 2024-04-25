@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased]
 
 - Added role for creation of local borg repository
+- Updated timezone role variable names to reflect ansible-lint best practices
 
 ## [2.3.0] - 2024-04-23
 
