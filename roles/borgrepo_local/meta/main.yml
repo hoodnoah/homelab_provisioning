@@ -1,6 +1,6 @@
 galaxy_info:
   author: Noah Hood
-  description: A role for setting the time zone on a host
+  description: sets up a borg repository and cron job for daily backups
 
   license: MIT
 
@@ -12,6 +12,8 @@ galaxy_info:
         - "jammy"
 
   galaxy_tags:
-    - timezone
+    - borg
+    - borgbackup
 
-dependencies: []
+dependencies:
+  - role: borgbackup
