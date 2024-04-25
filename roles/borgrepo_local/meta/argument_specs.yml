@@ -8,19 +8,19 @@ argument_specs:
     author:
       - "Noah Hood"
     options:
-      borgrepo_app_name:
+      borgrepo_local_app_name:
         type: "str"
         required: true
         description: the name of the application which is being backed up by borg
-      borgrepo_repo_path:
+      borgrepo_local_repo_path:
         type: "str"
         required: true
         description: the path to the borg repository, e.g. /var/app-backup
-      borgrepo_passphrase:
+      borgrepo_local_passphrase:
         type: "str"
         required: true
         description: the passphrase to use for encrypting the borg repository
-      borgrepo_backup_paths:
+      borgrepo_local_backup_paths:
         type: "list"
         elements: "str"
         required: true

@@ -9,15 +9,15 @@
   block:
     - name: Create borg repository directory
       ansible.builtin.file:
-        path: "{{ borgrepo_repo_path }}"
+        path: "{{ borgrepo_local_repo_path }}"
         state: directory
         mode: u+rw,g+rw,o+rw
 
     - name: Initialize borg repository
       ansible.builtin.command:
-        cmd: "borg init --encryption=repokey-blake2 {{ borgrepo_repo_path }}"
+        cmd: "borg init --encryption=repokey-blake2 {{ borgrepo_local_repo_path }}"
       environment:
-        BORG_PASSPHRASE: "{{ borgrepo_passphrase }}"
+        BORG_PASSPHRASE: "{{ borgrepo_local_passphrase }}"
       register: borg_init
       changed_when: borg_init.rc == 0
       failed_when: borg_init.rc != 0 and borg_init.rc != 2
@@ -25,7 +25,7 @@
 - name: Set borg password environment variable in borg config
   ansible.builtin.copy:
     dest: "/etc/.borgpass"
-    content: "export BORG_PASSPHRASE={{ borgrepo_passphrase }}"
+    content: "export BORG_PASSPHRASE={{ borgrepo_local_passphrase }}"
     owner: "root"
     group: "root"
     mode: "0600"
@@ -36,7 +36,7 @@
     name: "Borg backup to repository"
     minute: "1"
     hour: "0"
-    job: "borg create {{ borgrepo_repo_path }}::{{ borgrepo_app_name }}-{now:%Y-%m-%d} {{ borgrepo_backup_paths | join(' ') }}"
-    cron_file: "borgbackup-{{ borgrepo_app_name }}"
+    job: "borg create {{ borgrepo_local_repo_path }}::{{ borgrepo_local_app_name }}-{now:%Y-%m-%d} {{ borgrepo_local_backup_paths | join(' ') }}"
+    cron_file: "borgbackup-{{ borgrepo_local_app_name }}"
     user: "root"
     state: present
