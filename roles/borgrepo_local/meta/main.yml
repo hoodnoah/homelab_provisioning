@@ -1,0 +1,18 @@
+galaxy_info:
+  author: Noah Hood
+  description: sets up a borg repository and cron job for daily backups
+
+  license: MIT
+
+  min_ansible_version: "2.1"
+
+  platforms:
+  - name: Ubuntu
+    versions:
+    - "jammy"
+
+  galaxy_tags:
+    - borg
+    - borgbackup
+
+dependencies: []
