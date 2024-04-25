@@ -5,5 +5,6 @@
     "**/*.yml": "ansible",
     "**/*.j2": "ansible-jinja"
   },
-  "ansible.python.interpreterPath": "/Users/noahhood/Documents/Programming/ansible_collection/venv/bin/python"
+  "ansible.python.interpreterPath": "/Users/noahhood/Documents/Programming/ansible_collection/venv/bin/python",
+  "cSpell.words": ["borgbackup", "borgrepo"]
 }
