@@ -1,0 +1,5 @@
+---
+# defaults file for borgrepo
+FREQUENCY: daily
+PRUNE_FREQUENCY: weekly
+PRUNE_KEEP_DAILIES: 7

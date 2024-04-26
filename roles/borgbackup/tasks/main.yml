@@ -1,7 +1,12 @@
 ---
 # tasks file for borgbackup
-- name: install borgbackup
+- name: Install borgbackup
   ansible.builtin.package:
     name: borgbackup
     state: present
   become: true
+
+- name: Set borgbackup_installed fact
+  ansible.builtin.set_fact:
+    borgbackup_installed: true
+  when: borgbackup_installed is not defined or not borgbackup_installed

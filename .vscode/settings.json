@@ -1,3 +1,10 @@
 {
-  "ansible.python.interpreterPath": "/Users/noahhood/Documents/Programming/ansible_collection/venv/bin/python"
+  "files.associations": {
+    "galaxy.yml": "yaml",
+    "**/meta/*.yml": "yaml",
+    "**/*.yml": "ansible",
+    "**/*.j2": "ansible-jinja"
+  },
+  "ansible.python.interpreterPath": "/Users/noahhood/Documents/Programming/ansible_collection/venv/bin/python",
+  "cSpell.words": ["borgbackup", "borgrepo"]
 }
